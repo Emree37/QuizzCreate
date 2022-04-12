@@ -1,0 +1,103 @@
+﻿@model QuizViewModel
+
+@{
+	ViewBag.Title = "New Quiz";
+}
+
+<div class="container w-75">
+	<div class="row p-5">
+		<form method="post" asp-controller="Quiz" asp-action="CreateQuiz">
+			<select asp-for="@Model.Title" name="title" id="paragraphs" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+				@for (int i = 0; i < ViewBag.RecentlyPublisheds.Count; i++)
+				{
+					<option value="@ViewBag.RecentlyPublisheds[i].Title">@ViewBag.RecentlyPublisheds[i].Title</option>
+				}
+			</select>
+			<!-- Text -->
+			<div class="card mb-5">
+				<div id="paragraph-text" class="card-body">
+					@Html.Raw(ViewBag.RecentlyPublisheds[0].Paragraphs)
+					<input type="hidden" asp-for="@Model.Paragraphs" value="@ViewBag.RecentlyPublisheds[0].Paragraphs"/>
+				</div>
+			</div>
+			<!-- Question Form -->
+			@for (int i = 0; i < 4; i++)
+			{
+				<div class="p-0">
+					<div class="mb-3">
+						<textarea asp-for="@Model.Questions[i].QuestionContent" class="form-control" id="exampleFormControlTextarea1" rows="1"
+							  placeholder="Soru 1"></textarea>
+					</div>
+					<!-- Answers -->
+					<div class="question-container">
+						<div class="question mb-1">
+							<textarea asp-for="@Model.Questions[i].Options[0].OptionContent" class="form-control" id="exampleFormControlTextarea1" rows="1"
+								  placeholder="A ) "></textarea>
+							<input type="hidden" asp-for="@Model.Questions[i].Options[0].Character" value="0"/>
+						</div>
+						<div class="question mb-1">
+							<textarea asp-for="@Model.Questions[i].Options[1].OptionContent" class="form-control" id="exampleFormControlTextarea1" rows="1"
+								  placeholder="B ) "></textarea>
+							<input type="hidden" asp-for="@Model.Questions[i].Options[1].Character" value="1"/>
+						</div>
+						<div class="question mb-1">
+							<textarea asp-for="@Model.Questions[i].Options[2].OptionContent" class="form-control" id="exampleFormControlTextarea1" rows="1"
+								  placeholder="C ) "></textarea>
+							<input type="hidden" asp-for="@Model.Questions[i].Options[2].Character" value="2"/>
+						</div>
+						<div class="question mb-2">
+							<textarea asp-for="@Model.Questions[i].Options[3].OptionContent" class="form-control" id="exampleFormControlTextarea1" rows="1"
+								  placeholder="D ) "></textarea>
+							<input type="hidden" asp-for="@Model.Questions[i].Options[3].Character" value="3"/>
+						</div>
+					</div>
+					<!-- Answers End-->
+					<!-- Select Correct Answer -->
+					<div class="w-25 mx-auto mb-5">
+						<select asp-for="@Model.Questions[i].CorrectAnswer" class="form-select" aria-label="Default select example">
+							<option selected>Doğru Cevap Seç</option>
+							<option value=0>A</option>
+							<option value=1>B</option>
+							<option value=2>C</option>
+							<option value=3>D</option>
+						</select>
+					</div>
+					<!-- Select Correct Answer End -->
+			</div>
+				<!-- Question Form End -->
+			}
+
+			<div class="w-50 mx-auto mb-5">
+				<button type="submit" class="w-100 btn btn-outline-primary">SINAV OLUŞTUR</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts
+{
+
+<script text->
+	$(document).ready(function() {
+		$('#paragraphs').change(function () {
+			var textTitle = $(this).val();
+			$.ajax({
+				url: "/Quiz/getParagraph",
+				type: "POST",
+				data:{"textTitle": textTitle},
+				error: function (request, status, error) {
+					console.log(request);
+				},
+				success: function (response) {
+					console.log(response);
+					markup = response;
+					paragraph = $("#paragraph-text");
+					paragraph.empty();
+					paragraph.append(markup);
+				}
+			});
+		});
+	});
+</script>
+
+}

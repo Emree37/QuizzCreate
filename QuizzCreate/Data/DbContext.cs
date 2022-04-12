@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using QuizzCreate.Models.Identity;
+using QuizzCreate.Models.Quiz;
 
 namespace QuizzCreate.Data
 {
@@ -16,6 +17,9 @@ namespace QuizzCreate.Data
             base.OnModelCreating(builder);
         }
 
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Option> Options { get; set; }
 
     }
 }
