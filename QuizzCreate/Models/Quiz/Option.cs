@@ -7,10 +7,9 @@ namespace QuizzCreate.Models.Quiz
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public OptionCharacter Character { get; set; } // Secenek Harfi
-        public string OptionContent { get; set; } // Seceengin icerigi
+        public OptionCharacter Character { get; set; } 
+        public string OptionContent { get; set; } 
 
-        // Bagli oldugu soruyu ifade ediyor
         public Guid QuestionId { get; set; }
         [ForeignKey(nameof(QuestionId))]
         public virtual Question Question { get; set; }

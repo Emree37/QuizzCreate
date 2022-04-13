@@ -25,11 +25,6 @@ namespace QuizzCreate.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult CreateQuiz()
         {
             string urlHome = "https://www.wired.com";

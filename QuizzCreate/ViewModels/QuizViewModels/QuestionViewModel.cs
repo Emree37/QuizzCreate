@@ -5,8 +5,8 @@ namespace QuizzCreate.ViewModels.QuizViewModels
 {
     public class QuestionViewModel
     {
-        public string QuestionContent { get; set; } // Soru icerigi
-        public OptionCharacter CorrectAnswer { get; set; } // Dogru secenek
+        public string QuestionContent { get; set; } 
+        public OptionCharacter CorrectAnswer { get; set; } 
         public virtual List<OptionViewModel> Options { get; set; }
     }
 }
